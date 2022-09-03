@@ -13,8 +13,16 @@ zuul:
       path: /results/**
       serviceId: multiplication
       strip-prefix: false
+    users:
+      path: /users/**
+      serviceId: multiplication
+      strip-prefix: false
     leaders:
       path: /leaders/**
+      serviceId: gamification
+      strip-prefix: false
+    scores:
+      path: /scores/**
       serviceId: gamification
       strip-prefix: false
     stats:
@@ -32,3 +40,19 @@ eureka:
   client:
     service-url:
       default-zone: http://localhost:8761/eureka/
+
+
+---
+# ??? ??? ??? ?? ??
+spring:
+  profiles: test
+zuul:
+  routes:
+    gamification-admin:
+      path: /gamification/admin/**
+      serviceId: gamification
+      strip-prefix: false
+    multiplication-admin:
+      path: /multiplication/admin/**
+      serviceId: multiplication
+      strip-prefix: false
