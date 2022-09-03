@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 사용자가 POST 로 답안을 전송하도록 REST API 를 제공하는 클래스
@@ -38,6 +39,13 @@ final class MultiplicationResultAttemptController {
     ResponseEntity<List<MultiplicationResultAttempt>> getStatistics(@RequestParam("alias") String alias) {
         return ResponseEntity.ok(
                 multiplicationService.getStatsForUser(alias)
+        );
+    }
+
+    @GetMapping("/{resultId}")
+    ResponseEntity<Optional<MultiplicationResultAttempt>> getResultById(final @PathVariable("resultId") Long resultId) {
+        return ResponseEntity.ok(
+                multiplicationService.getResultById(resultId)
         );
     }
 
