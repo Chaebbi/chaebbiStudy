@@ -1,5 +1,6 @@
 package microservices.book.gamification.client;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import microservices.book.gamification.client.dto.MultiplicationResultAttempt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,10 +24,21 @@ class MultiplicationResultAttemptClientImpl implements MultiplicationResultAttem
         this.multiplicationHost = multiplicationHost;
     }
 
+    @HystrixCommand(fallbackMethod = "defaultResult")
     @Override
-    public MultiplicationResultAttempt retrieveMultiplicationResultAttemptById(final Long multiplicationResultAttemptId) {
+    public MultiplicationResultAttempt retrieveMultiplicationResultAttemptbyId(final Long multiplicationResultAttemptId) {
         return restTemplate.getForObject(
                 multiplicationHost + "/results/" + multiplicationResultAttemptId,
                 MultiplicationResultAttempt.class);
+    }
+
+    private MultiplicationResultAttempt defaultResult(final Long multiplicationResultAttemptId) {
+        return new MultiplicationResultAttempt("fakeAlias",
+                10, 10, 100, true);
+    }
+
+    @Override
+    public MultiplicationResultAttempt retrieveMultiplicationResultAttemptById(Long multiplicationId) {
+        return null;
     }
 }
