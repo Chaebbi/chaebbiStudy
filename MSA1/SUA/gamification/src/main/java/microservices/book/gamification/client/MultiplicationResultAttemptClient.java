@@ -1,5 +1,6 @@
 package microservices.book.gamification.client;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import microservices.book.gamification.client.dto.MultiplicationResultAttempt;
 
 /**
@@ -7,6 +8,9 @@ import microservices.book.gamification.client.dto.MultiplicationResultAttempt;
  * 통신 방식은 상관 없음
  */
 public interface MultiplicationResultAttemptClient {
+
+    @HystrixCommand(fallbackMethod = "defaultResult")
+    MultiplicationResultAttempt retrieveMultiplicationResultAttemptbyId(Long multiplicationResultAttemptId);
 
     MultiplicationResultAttempt retrieveMultiplicationResultAttemptById(final Long multiplicationId);
 
