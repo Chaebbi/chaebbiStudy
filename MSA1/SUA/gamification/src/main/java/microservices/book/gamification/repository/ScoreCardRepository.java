@@ -20,7 +20,7 @@ public interface ScoreCardRepository extends CrudRepository<ScoreCard, Long> {
      * @return 주어진 사용자의 총 점수
      */
     @Query("SELECT SUM(s.score) FROM microservices.book.gamification.domain.ScoreCard s WHERE s.userId = :userId GROUP BY s.userId")
-    int getTotalScoreForUser(@Param("userId") final Long userId);
+    Integer getTotalScoreForUser(@Param("userId") final Long userId);
 
     /**
      * 사용자와 사용자의 총 점수를 나타내는 {@link LeaderBoardRow} 리스트를 조회
@@ -39,4 +39,12 @@ public interface ScoreCardRepository extends CrudRepository<ScoreCard, Long> {
      * @return 주어진 사용자의 최근 순으로 정렬된 ScoreCard 리스트
      */
     List<ScoreCard> findByUserIdOrderByScoreTimestampDesc(final Long userId);
+
+    /**
+     * 답안 ID 로 특정 ScoreCard 를 조회
+     *
+     * @param attemptId the unique id of the scorecard
+     * @return the {@link ScoreCard} object matching the id
+     */
+    ScoreCard findByAttemptId(final Long attemptId);
 }

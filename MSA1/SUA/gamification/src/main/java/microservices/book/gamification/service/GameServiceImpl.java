@@ -9,6 +9,7 @@ import microservices.book.gamification.repository.ScoreCardRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -84,7 +85,7 @@ class GameServiceImpl implements GameService {
 
         // 행운의 숫자 배지
         MultiplicationResultAttempt attempt = attemptClient
-                .retrieveMultiplicationResultAttemptById(attemptId);
+                .retrieveMultiplicationResultAttemptbyId(attemptId);
         if (!containsBadge(badgeCardList, Badge.LUCKY_NUMBER) &&
                 (LUCKY_NUMBER == attempt.getMultiplicationFactorA() ||
                         LUCKY_NUMBER == attempt.getMultiplicationFactorB())) {
@@ -98,11 +99,20 @@ class GameServiceImpl implements GameService {
 
     @Override
     public GameStats retrieveStatsForUser(final Long userId) {
-        int score = scoreCardRepository.getTotalScoreForUser(userId);
+        Integer score = scoreCardRepository.getTotalScoreForUser(userId);
+        // 사용자가 존재하지 않으면 0점을 의미
+        if (score == null) {
+            return new GameStats(userId, 0, Collections.emptyList());
+        }
         List<BadgeCard> badgeCards = badgeCardRepository
                 .findByUserIdOrderByBadgeTimestampDesc(userId);
         return new GameStats(userId, score, badgeCards.stream()
                 .map(BadgeCard::getBadge).collect(Collectors.toList()));
+    }
+
+    @Override
+    public ScoreCard getScoreForAttempt(final Long attemptId) {
+        return scoreCardRepository.findByAttemptId(attemptId);
     }
 
     /**
@@ -135,4 +145,5 @@ class GameServiceImpl implements GameService {
         log.info("사용자 ID {} 새로운 배지 획득: {}", userId, badge);
         return badgeCard;
     }
+
 }
