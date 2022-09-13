@@ -5,6 +5,7 @@ import microservices.book.multiplication.domain.Multiplication;
 import microservices.book.multiplication.domain.MultiplicationResultAttempt;
 import microservices.book.multiplication.domain.User;
 import microservices.book.multiplication.service.MultiplicationService;
+import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +19,9 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
 import static microservices.book.multiplication.controller.MultiplicationResultAttemptController.ResultResponse;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -53,8 +56,7 @@ public class MultiplicationResultAttemptControllerTest {
         genericParameterizedTest(false);
     }
 
-    @Test
-    public void genericParameterizedTest(final boolean correct) throws Exception {
+    void genericParameterizedTest(final boolean correct) throws Exception {
         // given (지금 서비스를 테스트하는 것이 아님)
         given(multiplicationService
                 .checkAttempt(any(MultiplicationResultAttempt.class)))
@@ -74,11 +76,13 @@ public class MultiplicationResultAttemptControllerTest {
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.getContentAsString()).isEqualTo(
                 jsonResult.write(
-                        new MultiplicationResultAttempt(
-                                attempt.getUser(),
+                        new MultiplicationResultAttempt(attempt.getUser(),
                                 attempt.getMultiplication(),
-                                attempt.getResultAttempt(), correct)
+                                attempt.getResultAttempt(),
+                                correct)
                 ).getJson());
     }
+
+
 
 }
