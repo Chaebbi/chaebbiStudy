@@ -3,6 +3,8 @@ package microservices.book.gamification.service;
 import lombok.extern.slf4j.Slf4j;
 //import microservices.book.gamification.client.MultiplicationResultAttemptClient;
 //import microservices.book.gamification.client.dto.MultiplicationResultAttempt;
+import microservices.book.gamification.client.MultiplicationResultAttemptClient;
+import microservices.book.gamification.client.dto.MultiplicationResultAttempt;
 import microservices.book.gamification.domain.Badge;
 import microservices.book.gamification.domain.BadgeCard;
 import microservices.book.gamification.domain.GameStats;
@@ -24,13 +26,15 @@ class GameServiceImpl implements GameService {
 
   private ScoreCardRepository scoreCardRepository;
   private BadgeCardRepository badgeCardRepository;
-  //private MultiplicationResultAttemptClient attemptClient;
+  private MultiplicationResultAttemptClient attemptClient;
 
   GameServiceImpl(ScoreCardRepository scoreCardRepository,
-                  BadgeCardRepository badgeCardRepository
+                  BadgeCardRepository badgeCardRepository,
+                  MultiplicationResultAttemptClient attemptClient
                   ) {
     this.scoreCardRepository = scoreCardRepository;
     this.badgeCardRepository = badgeCardRepository;
+    this.attemptClient = attemptClient;
   }
 
   @Override
@@ -84,7 +88,7 @@ class GameServiceImpl implements GameService {
       badgeCards.add(firstWonBadge);
     }
 
-    /*// 행운의 숫자 배지
+    // 행운의 숫자 배지
     MultiplicationResultAttempt attempt = attemptClient
             .retrieveMultiplicationResultAttemptById(attemptId);
     if (!containsBadge(badgeCardList, Badge.LUCKY_NUMBER) &&
@@ -93,7 +97,7 @@ class GameServiceImpl implements GameService {
       BadgeCard luckyNumberBadge = giveBadgeToUser(
               Badge.LUCKY_NUMBER, userId);
       badgeCards.add(luckyNumberBadge);
-    }*/
+    }
 
     return badgeCards;
   }
