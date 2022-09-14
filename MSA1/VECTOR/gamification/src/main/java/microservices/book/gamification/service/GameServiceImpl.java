@@ -1,14 +1,9 @@
 package microservices.book.gamification.service;
 
 import lombok.extern.slf4j.Slf4j;
-//import microservices.book.gamification.client.MultiplicationResultAttemptClient;
-//import microservices.book.gamification.client.dto.MultiplicationResultAttempt;
 import microservices.book.gamification.client.MultiplicationResultAttemptClient;
 import microservices.book.gamification.client.dto.MultiplicationResultAttempt;
-import microservices.book.gamification.domain.Badge;
-import microservices.book.gamification.domain.BadgeCard;
-import microservices.book.gamification.domain.GameStats;
-import microservices.book.gamification.domain.ScoreCard;
+import microservices.book.gamification.domain.*;
 import microservices.book.gamification.repository.BadgeCardRepository;
 import microservices.book.gamification.repository.ScoreCardRepository;
 import org.springframework.stereotype.Service;
@@ -30,8 +25,7 @@ class GameServiceImpl implements GameService {
 
   GameServiceImpl(ScoreCardRepository scoreCardRepository,
                   BadgeCardRepository badgeCardRepository,
-                  MultiplicationResultAttemptClient attemptClient
-                  ) {
+                  MultiplicationResultAttemptClient attemptClient) {
     this.scoreCardRepository = scoreCardRepository;
     this.badgeCardRepository = badgeCardRepository;
     this.attemptClient = attemptClient;
@@ -107,10 +101,8 @@ class GameServiceImpl implements GameService {
     int score = scoreCardRepository.getTotalScoreForUser(userId);
     List<BadgeCard> badgeCards = badgeCardRepository
             .findByUserIdOrderByBadgeTimestampDesc(userId);
-    return new GameStats(userId, score, badgeCards
-            .stream()
-            .map(BadgeCard::getBadge)
-            .collect(Collectors.toList()));
+    return new GameStats(userId, score, badgeCards.stream()
+            .map(BadgeCard::getBadge).collect(Collectors.toList()));
   }
 
   /**
