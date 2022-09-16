@@ -15,6 +15,18 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	// Eureka
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+	// Ribbon
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-ribbon'
+	// Zuul
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-zuul:2.2.10.RELEASE'
+	implementation 'org.springframework.cloud:spring-cloud-netflix-zuul'
+	implementation 'com.netflix.zuul:zuul-core:2.3.0'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+
 }
 
 tasks.named('test') {

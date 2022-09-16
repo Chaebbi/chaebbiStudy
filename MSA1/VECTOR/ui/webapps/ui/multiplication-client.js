@@ -1,6 +1,8 @@
+var SERVER_URL = "http://localhost:8000/api";
+
 function updateMultiplication() {
   $.ajax({
-    url: "http://localhost:8080/multiplications/random"
+    url: SERVER_URL + "/multiplications/random"
   }).then(function (data) {
     // 폼 비우기
     $("#attempt-form").find("input[name='result-attempt']").val("");
@@ -14,8 +16,8 @@ function updateMultiplication() {
 function updateResults(alias) {
   var userId = -1;
   $.ajax({
+    url: SERVER_URL + "/results?alias=" + alias,
     async: false,
-    url: "http://localhost:8080/results?alias=" + alias,
     success: function (data) {
       $('#results-div').show();
       $('#results-body').empty();
@@ -52,7 +54,7 @@ $(document).ready(function () {
 
     // POST 로 데이터 보내기
     $.ajax({
-      url: 'http://localhost:8080/results',
+      url: SERVER_URL + '/results',
       type: 'POST',
       data: JSON.stringify(data),
       contentType: "application/json; charset=utf-8",
