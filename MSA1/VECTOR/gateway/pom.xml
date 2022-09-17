@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>microservices.book</groupId>
-    <artifactId>gateway-v7</artifactId>
-    <version>0.7.0-SNAPSHOT</version>
+    <artifactId>gateway-v8</artifactId>
+    <version>0.8.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>gateway-v7</name>
-    <description>소셜 곱샘 애플리케이션 - 게이트웨이 (도서 스프링 부트로 배우는 마이크로서비스)</description>
+    <name>gateway-v8</name>
+    <description>소셜 곱셈 애플리케이션 - 게이트웨이 (도서 스프링 부트로 배우는 마이크로서비스)</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -29,6 +29,21 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
         <dependency>
