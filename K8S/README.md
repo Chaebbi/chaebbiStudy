@@ -13,3 +13,4 @@
 ## 2022.09.20
 [민서] <br>
 1. 쿠버네티스 강의 쿠버네티스 인사이드까지 듣기 완료 (블로그 정리 : https://velog.io/@rosesua318/%EC%BF%A0%EB%B2%84%EB%84%A4%ED%8B%B0%EC%8A%A4-%EC%9D%B8%EC%82%AC%EC%9D%B4%EB%93%9C) <br>
+2. 컨테이너 인프라 환경 구축을 위한 쿠버네티스/도커 3장 (블로그 정리 : https://velog.io/@rosesua318/3%EC%9E%A5-%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88%EB%A5%BC-%EB%8B%A4%EB%A3%A8%EB%8A%94-%ED%91%9C%EC%A4%80-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98-%EC%BF%A0%EB%B2%84%EB%84%A4%ED%8B%B0%EC%8A%A4) <br>
