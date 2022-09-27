@@ -17,3 +17,9 @@
 ### 2022.09.21
 [민서] <br>
 6장 : https://velog.io/@rosesua318/6%EC%9E%A5-%EC%98%81%EC%86%8D%EC%84%B1-%EC%B6%94%EA%B0%80 <br>
+
+
+---
+[세현] <br> 
+스터디-MSA (스프링으로 하는 마이크로서비스 구축) 시리즈 포스트 <br> 
+https://velog.io/@vector13/series/%EC%8A%A4%ED%84%B0%EB%94%94-MSA-%EC%8A%A4%ED%94%84%EB%A7%81%EC%9C%BC%EB%A1%9C-%ED%95%98%EB%8A%94-%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4-%EA%B5%AC%EC%B6%95
