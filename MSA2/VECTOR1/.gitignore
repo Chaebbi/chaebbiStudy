@@ -1,0 +1,28 @@
+../../../../study/Hands-On-Microservices-with-Spring-Boot-and-Spring-Cloud/Chapter06/.gradle
+/build/
+!../../../Chaebbi/chaebbiStudy/MSA2/VECTOR1/gradle/wrapper/gradle-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+.DS_Store
+ML_*
