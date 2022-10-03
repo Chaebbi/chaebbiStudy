@@ -28,10 +28,10 @@ repositories {
 
 dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-webflux')
-	implementation('io.springfox:springfox-swagger2:3.0.0')	//chap5 -swagger
+	implementation('io.springfox:springfox-swagger2:3.0.0')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 
 dependencyManagement {
-    imports { mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}") }
+	imports { mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}") }
 }

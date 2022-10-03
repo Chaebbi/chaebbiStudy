@@ -10,10 +10,14 @@ buildscript {
 	}
 }
 
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
 group = 'se.magnus.microservices.core.product'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+version = '1.0.0-SNAPSHOT'
+sourceCompatibility = 1.8
 
 ext {
 	mapstructVersion = "1.3.1.Final"
@@ -38,8 +42,4 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	testImplementation('io.projectreactor:reactor-test')
 	testImplementation('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
-}
-
-tasks.named('test') {
-	useJUnitPlatform()
 }
