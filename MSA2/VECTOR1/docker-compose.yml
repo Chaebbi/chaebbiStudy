@@ -2,7 +2,7 @@ version: '2.1'
 
 services:
   product:
-    build: ../../../../study/Hands-On-Microservices-with-Spring-Boot-and-Spring-Cloud/Chapter06/microservices/product-service
+    build: microservices/recommendation-service
     mem_limit: 350m
     environment:
       - SPRING_PROFILES_ACTIVE=docker
