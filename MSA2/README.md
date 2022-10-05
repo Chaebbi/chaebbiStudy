@@ -18,6 +18,9 @@
 [민서] <br>
 6장 : https://velog.io/@rosesua318/6%EC%9E%A5-%EC%98%81%EC%86%8D%EC%84%B1-%EC%B6%94%EA%B0%80 <br>
 
+### 2022.10.05
+[민서] <br>
+7장 : https://velog.io/@rosesua318/7%EC%9E%A5-%EB%A6%AC%EC%95%A1%ED%8B%B0%EB%B8%8C-%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4-%EA%B0%9C%EB%B0%9C <br>
 
 ---
 [세현] <br> 
