@@ -39,11 +39,11 @@ public class RecommendationServiceImpl implements RecommendationService {
 
         RecommendationEntity entity = mapper.apiToEntity(body);
         Mono<Recommendation> newEntity = repository.save(entity)
-                .log()
-                .onErrorMap(
-                        DuplicateKeyException.class,
-                        ex -> new InvalidInputException("Duplicate key, Product Id: " + body.getProductId() + ", Recommendation Id:" + body.getRecommendationId()))
-                .map(e -> mapper.entityToApi(e));
+            .log()
+            .onErrorMap(
+                DuplicateKeyException.class,
+                ex -> new InvalidInputException("Duplicate key, Product Id: " + body.getProductId() + ", Recommendation Id:" + body.getRecommendationId()))
+            .map(e -> mapper.entityToApi(e));
 
         return newEntity.block();
     }
@@ -54,9 +54,9 @@ public class RecommendationServiceImpl implements RecommendationService {
         if (productId < 1) throw new InvalidInputException("Invalid productId: " + productId);
 
         return repository.findByProductId(productId)
-                .log()
-                .map(e -> mapper.entityToApi(e))
-                .map(e -> {e.setServiceAddress(serviceUtil.getServiceAddress()); return e;});
+            .log()
+            .map(e -> mapper.entityToApi(e))
+            .map(e -> {e.setServiceAddress(serviceUtil.getServiceAddress()); return e;});
     }
 
     @Override

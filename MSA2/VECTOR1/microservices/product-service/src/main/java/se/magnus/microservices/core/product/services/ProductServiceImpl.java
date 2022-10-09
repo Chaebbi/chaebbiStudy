@@ -41,11 +41,11 @@ public class ProductServiceImpl implements ProductService {
 
         ProductEntity entity = mapper.apiToEntity(body);
         Mono<Product> newEntity = repository.save(entity)
-                .log()
-                .onErrorMap(
-                        DuplicateKeyException.class,
-                        ex -> new InvalidInputException("Duplicate key, Product Id: " + body.getProductId()))
-                .map(e -> mapper.entityToApi(e));
+            .log()
+            .onErrorMap(
+                DuplicateKeyException.class,
+                ex -> new InvalidInputException("Duplicate key, Product Id: " + body.getProductId()))
+            .map(e -> mapper.entityToApi(e));
 
         return newEntity.block();
     }
@@ -56,10 +56,10 @@ public class ProductServiceImpl implements ProductService {
         if (productId < 1) throw new InvalidInputException("Invalid productId: " + productId);
 
         return repository.findByProductId(productId)
-                .switchIfEmpty(error(new NotFoundException("No product found for productId: " + productId)))
-                .log()
-                .map(e -> mapper.entityToApi(e))
-                .map(e -> {e.setServiceAddress(serviceUtil.getServiceAddress()); return e;});
+            .switchIfEmpty(error(new NotFoundException("No product found for productId: " + productId)))
+            .log()
+            .map(e -> mapper.entityToApi(e))
+            .map(e -> {e.setServiceAddress(serviceUtil.getServiceAddress()); return e;});
     }
 
     @Override

@@ -6,10 +6,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.health.Health;
-//import org.springframework.cloud.stream.annotation.EnableBinding;
-//import org.springframework.cloud.stream.annotation.Output;
-//import org.springframework.messaging.MessageChannel;
-//import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.cloud.stream.annotation.Output;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
@@ -21,7 +21,7 @@ import se.magnus.api.core.recommendation.Recommendation;
 import se.magnus.api.core.recommendation.RecommendationService;
 import se.magnus.api.core.review.Review;
 import se.magnus.api.core.review.ReviewService;
-//import se.magnus.api.event.Event;
+import se.magnus.api.event.Event;
 import se.magnus.util.exceptions.InvalidInputException;
 import se.magnus.util.exceptions.NotFoundException;
 import se.magnus.util.http.HttpErrorInfo;
@@ -29,10 +29,10 @@ import se.magnus.util.http.HttpErrorInfo;
 import java.io.IOException;
 
 import static reactor.core.publisher.Flux.empty;
-//import static se.magnus.api.event.Event.Type.CREATE;
-//import static se.magnus.api.event.Event.Type.DELETE;
+import static se.magnus.api.event.Event.Type.CREATE;
+import static se.magnus.api.event.Event.Type.DELETE;
 
-//@EnableBinding(ProductCompositeIntegration.MessageSources.class)
+@EnableBinding(ProductCompositeIntegration.MessageSources.class)
 @Component
 public class ProductCompositeIntegration implements ProductService, RecommendationService, ReviewService {
 
@@ -53,21 +53,21 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
         String OUTPUT_RECOMMENDATIONS = "output-recommendations";
         String OUTPUT_REVIEWS = "output-reviews";
 
-//        @Output(OUTPUT_PRODUCTS)
-//        MessageChannel outputProducts();
-//
-//        @Output(OUTPUT_RECOMMENDATIONS)
-//        MessageChannel outputRecommendations();
-//
-//        @Output(OUTPUT_REVIEWS)
-//        MessageChannel outputReviews();
+        @Output(OUTPUT_PRODUCTS)
+        MessageChannel outputProducts();
+
+        @Output(OUTPUT_RECOMMENDATIONS)
+        MessageChannel outputRecommendations();
+
+        @Output(OUTPUT_REVIEWS)
+        MessageChannel outputReviews();
     }
 
     @Autowired
     public ProductCompositeIntegration(
             WebClient.Builder webClient,
             ObjectMapper mapper,
-//            MessageSources messageSources,
+            MessageSources messageSources,
 
             @Value("${app.product-service.host}") String productServiceHost,
             @Value("${app.product-service.port}") int    productServicePort,
@@ -90,7 +90,7 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
 
     @Override
     public Product createProduct(Product body) {
-//        messageSources.outputProducts().send(MessageBuilder.withPayload(new Event(CREATE, body.getProductId(), body)).build());
+        messageSources.outputProducts().send(MessageBuilder.withPayload(new Event(CREATE, body.getProductId(), body)).build());
         return body;
     }
 
@@ -104,12 +104,12 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
 
     @Override
     public void deleteProduct(int productId) {
-//        messageSources.outputProducts().send(MessageBuilder.withPayload(new Event(DELETE, productId, null)).build());
+        messageSources.outputProducts().send(MessageBuilder.withPayload(new Event(DELETE, productId, null)).build());
     }
 
     @Override
     public Recommendation createRecommendation(Recommendation body) {
-//        messageSources.outputRecommendations().send(MessageBuilder.withPayload(new Event(CREATE, body.getProductId(), body)).build());
+        messageSources.outputRecommendations().send(MessageBuilder.withPayload(new Event(CREATE, body.getProductId(), body)).build());
         return body;
     }
 
@@ -126,12 +126,12 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
 
     @Override
     public void deleteRecommendations(int productId) {
-//        messageSources.outputRecommendations().send(MessageBuilder.withPayload(new Event(DELETE, productId, null)).build());
+        messageSources.outputRecommendations().send(MessageBuilder.withPayload(new Event(DELETE, productId, null)).build());
     }
 
     @Override
     public Review createReview(Review body) {
-//        messageSources.outputReviews().send(MessageBuilder.withPayload(new Event(CREATE, body.getProductId(), body)).build());
+        messageSources.outputReviews().send(MessageBuilder.withPayload(new Event(CREATE, body.getProductId(), body)).build());
         return body;
     }
 
@@ -149,7 +149,7 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
 
     @Override
     public void deleteReviews(int productId) {
-//        messageSources.outputReviews().send(MessageBuilder.withPayload(new Event(DELETE, productId, null)).build());
+        messageSources.outputReviews().send(MessageBuilder.withPayload(new Event(DELETE, productId, null)).build());
     }
 
     public Mono<Health> getProductHealth() {
