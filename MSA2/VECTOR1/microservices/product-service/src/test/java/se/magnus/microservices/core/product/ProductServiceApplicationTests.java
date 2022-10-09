@@ -10,9 +10,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import se.magnus.api.core.product.Product;
 import se.magnus.microservices.core.product.persistence.ProductRepository;
+import se.magnus.util.exceptions.InvalidInputException;
 
 import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -30,7 +32,7 @@ public class ProductServiceApplicationTests {
 
 	@Before
 	public void setupDb() {
-		repository.deleteAll();
+		repository.deleteAll().block();
 	}
 
 	@Test
@@ -38,9 +40,13 @@ public class ProductServiceApplicationTests {
 
 		int productId = 1;
 
-		postAndVerifyProduct(productId, OK);
+		assertNull(repository.findByProductId(productId).block());
+		assertEquals(0, (long)repository.count().block());
 
-		assertTrue(repository.findByProductId(productId).isPresent());
+//		sendCreateProductEvent(productId);
+
+		assertNotNull(repository.findByProductId(productId).block());
+		assertEquals(1, (long)repository.count().block());
 
 		getAndVerifyProduct(productId, OK)
 				.jsonPath("$.productId").isEqualTo(productId);
@@ -51,13 +57,23 @@ public class ProductServiceApplicationTests {
 
 		int productId = 1;
 
-		postAndVerifyProduct(productId, OK);
+		assertNull(repository.findByProductId(productId).block());
 
-		assertTrue(repository.findByProductId(productId).isPresent());
+//		sendCreateProductEvent(productId);
 
-		postAndVerifyProduct(productId, UNPROCESSABLE_ENTITY)
-				.jsonPath("$.path").isEqualTo("/product")
-				.jsonPath("$.message").isEqualTo("Duplicate key, Product Id: " + productId);
+		assertNotNull(repository.findByProductId(productId).block());
+
+		/*try {
+			sendCreateProductEvent(productId);
+			fail("Expected a MessagingException here!");
+		} catch (MessagingException me) {
+			if (me.getCause() instanceof InvalidInputException)	{
+				InvalidInputException iie = (InvalidInputException)me.getCause();
+				assertEquals("Duplicate key, Product Id: " + productId, iie.getMessage());
+			} else {
+				fail("Expected a InvalidInputException as the root cause!");
+			}
+		}*/
 	}
 
 	@Test
@@ -65,13 +81,13 @@ public class ProductServiceApplicationTests {
 
 		int productId = 1;
 
-		postAndVerifyProduct(productId, OK);
-		assertTrue(repository.findByProductId(productId).isPresent());
+//		sendCreateProductEvent(productId);
+		assertNotNull(repository.findByProductId(productId).block());
 
-		deleteAndVerifyProduct(productId, OK);
-		assertFalse(repository.findByProductId(productId).isPresent());
+//		sendDeleteProductEvent(productId);
+		assertNull(repository.findByProductId(productId).block());
 
-		deleteAndVerifyProduct(productId, OK);
+//		sendDeleteProductEvent(productId);
 	}
 
 	@Test
