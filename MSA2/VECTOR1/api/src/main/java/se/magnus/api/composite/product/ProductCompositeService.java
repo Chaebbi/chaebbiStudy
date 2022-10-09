@@ -20,15 +20,15 @@ public interface ProductCompositeService {
      * @param body
      */
     @ApiOperation(
-            value = "${api.product-composite.create-composite-product.description}",
-            notes = "${api.product-composite.create-composite-product.notes}")
+        value = "${api.product-composite.create-composite-product.description}",
+        notes = "${api.product-composite.create-composite-product.notes}")
     @ApiResponses(value = {
-            @ApiResponse(code = 400, message = "Bad Request, invalid format of the request. See response message for more information."),
-            @ApiResponse(code = 422, message = "Unprocessable entity, input parameters caused the processing to fail. See response message for more information.")
+        @ApiResponse(code = 400, message = "Bad Request, invalid format of the request. See response message for more information."),
+        @ApiResponse(code = 422, message = "Unprocessable entity, input parameters caused the processing to fail. See response message for more information.")
     })
     @PostMapping(
-            value    = "/product-composite",
-            consumes = "application/json")
+        value    = "/product-composite",
+        consumes = "application/json")
     void createCompositeProduct(@RequestBody ProductAggregate body);
 
     /**
@@ -38,16 +38,16 @@ public interface ProductCompositeService {
      * @return the composite product info, if found, else null
      */
     @ApiOperation(
-            value = "${api.product-composite.get-composite-product.description}",
-            notes = "${api.product-composite.get-composite-product.notes}")
+        value = "${api.product-composite.get-composite-product.description}",
+        notes = "${api.product-composite.get-composite-product.notes}")
     @ApiResponses(value = {
-            @ApiResponse(code = 400, message = "Bad Request, invalid format of the request. See response message for more information."),
-            @ApiResponse(code = 404, message = "Not found, the specified id does not exist."),
-            @ApiResponse(code = 422, message = "Unprocessable entity, input parameters caused the processing to fail. See response message for more information.")
+        @ApiResponse(code = 400, message = "Bad Request, invalid format of the request. See response message for more information."),
+        @ApiResponse(code = 404, message = "Not found, the specified id does not exist."),
+        @ApiResponse(code = 422, message = "Unprocessable entity, input parameters caused the processing to fail. See response message for more information.")
     })
     @GetMapping(
-            value    = "/product-composite/{productId}",
-            produces = "application/json")
+        value    = "/product-composite/{productId}",
+        produces = "application/json")
     Mono<ProductAggregate> getCompositeProduct(@PathVariable int productId);
 
 
@@ -59,11 +59,11 @@ public interface ProductCompositeService {
      * @param productId
      */
     @ApiOperation(
-            value = "${api.product-composite.delete-composite-product.description}",
-            notes = "${api.product-composite.delete-composite-product.notes}")
+        value = "${api.product-composite.delete-composite-product.description}",
+        notes = "${api.product-composite.delete-composite-product.notes}")
     @ApiResponses(value = {
-            @ApiResponse(code = 400, message = "Bad Request, invalid format of the request. See response message for more information."),
-            @ApiResponse(code = 422, message = "Unprocessable entity, input parameters caused the processing to fail. See response message for more information.")
+        @ApiResponse(code = 400, message = "Bad Request, invalid format of the request. See response message for more information."),
+        @ApiResponse(code = 422, message = "Unprocessable entity, input parameters caused the processing to fail. See response message for more information.")
     })
     @DeleteMapping(value = "/product-composite/{productId}")
     void deleteCompositeProduct(@PathVariable int productId);

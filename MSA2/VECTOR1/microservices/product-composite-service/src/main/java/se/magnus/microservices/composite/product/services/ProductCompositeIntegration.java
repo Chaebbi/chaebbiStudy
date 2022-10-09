@@ -65,18 +65,18 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
 
     @Autowired
     public ProductCompositeIntegration(
-            WebClient.Builder webClient,
-            ObjectMapper mapper,
-            MessageSources messageSources,
+        WebClient.Builder webClient,
+        ObjectMapper mapper,
+        MessageSources messageSources,
 
-            @Value("${app.product-service.host}") String productServiceHost,
-            @Value("${app.product-service.port}") int    productServicePort,
+        @Value("${app.product-service.host}") String productServiceHost,
+        @Value("${app.product-service.port}") int    productServicePort,
 
-            @Value("${app.recommendation-service.host}") String recommendationServiceHost,
-            @Value("${app.recommendation-service.port}") int    recommendationServicePort,
+        @Value("${app.recommendation-service.host}") String recommendationServiceHost,
+        @Value("${app.recommendation-service.port}") int    recommendationServicePort,
 
-            @Value("${app.review-service.host}") String reviewServiceHost,
-            @Value("${app.review-service.port}") int    reviewServicePort
+        @Value("${app.review-service.host}") String reviewServiceHost,
+        @Value("${app.review-service.port}") int    reviewServicePort
     ) {
 
         this.webClient = webClient.build();
@@ -168,9 +168,9 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
         url += "/actuator/health";
         LOG.debug("Will call the Health API on URL: {}", url);
         return webClient.get().uri(url).retrieve().bodyToMono(String.class)
-                .map(s -> new Health.Builder().up().build())
-                .onErrorResume(ex -> Mono.just(new Health.Builder().down(ex).build()))
-                .log();
+            .map(s -> new Health.Builder().up().build())
+            .onErrorResume(ex -> Mono.just(new Health.Builder().down(ex).build()))
+            .log();
     }
 
     private Throwable handleException(Throwable ex) {
@@ -184,16 +184,16 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
 
         switch (wcre.getStatusCode()) {
 
-            case NOT_FOUND:
-                return new NotFoundException(getErrorMessage(wcre));
+        case NOT_FOUND:
+            return new NotFoundException(getErrorMessage(wcre));
 
-            case UNPROCESSABLE_ENTITY :
-                return new InvalidInputException(getErrorMessage(wcre));
+        case UNPROCESSABLE_ENTITY :
+            return new InvalidInputException(getErrorMessage(wcre));
 
-            default:
-                LOG.warn("Got a unexpected HTTP error: {}, will rethrow it", wcre.getStatusCode());
-                LOG.warn("Error body: {}", wcre.getResponseBodyAsString());
-                return ex;
+        default:
+            LOG.warn("Got a unexpected HTTP error: {}, will rethrow it", wcre.getStatusCode());
+            LOG.warn("Error body: {}", wcre.getResponseBodyAsString());
+            return ex;
         }
     }
 

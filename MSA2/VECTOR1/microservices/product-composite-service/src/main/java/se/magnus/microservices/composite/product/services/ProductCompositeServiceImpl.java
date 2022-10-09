@@ -63,12 +63,12 @@ public class ProductCompositeServiceImpl implements ProductCompositeService {
     @Override
     public Mono<ProductAggregate> getCompositeProduct(int productId) {
         return Mono.zip(
-                        values -> createProductAggregate((Product) values[0], (List<Recommendation>) values[1], (List<Review>) values[2], serviceUtil.getServiceAddress()),
-                        integration.getProduct(productId),
-                        integration.getRecommendations(productId).collectList(),
-                        integration.getReviews(productId).collectList())
-                .doOnError(ex -> LOG.warn("getCompositeProduct failed: {}", ex.toString()))
-                .log();
+            values -> createProductAggregate((Product) values[0], (List<Recommendation>) values[1], (List<Review>) values[2], serviceUtil.getServiceAddress()),
+            integration.getProduct(productId),
+            integration.getRecommendations(productId).collectList(),
+            integration.getReviews(productId).collectList())
+            .doOnError(ex -> LOG.warn("getCompositeProduct failed: {}", ex.toString()))
+            .log();
     }
 
     @Override
@@ -99,15 +99,15 @@ public class ProductCompositeServiceImpl implements ProductCompositeService {
 
         // 2. Copy summary recommendation info, if available
         List<RecommendationSummary> recommendationSummaries = (recommendations == null) ? null :
-                recommendations.stream()
-                        .map(r -> new RecommendationSummary(r.getRecommendationId(), r.getAuthor(), r.getRate(), r.getContent()))
-                        .collect(Collectors.toList());
+             recommendations.stream()
+                .map(r -> new RecommendationSummary(r.getRecommendationId(), r.getAuthor(), r.getRate(), r.getContent()))
+                .collect(Collectors.toList());
 
         // 3. Copy summary review info, if available
         List<ReviewSummary> reviewSummaries = (reviews == null)  ? null :
-                reviews.stream()
-                        .map(r -> new ReviewSummary(r.getReviewId(), r.getAuthor(), r.getSubject(), r.getContent()))
-                        .collect(Collectors.toList());
+            reviews.stream()
+                .map(r -> new ReviewSummary(r.getReviewId(), r.getAuthor(), r.getSubject(), r.getContent()))
+                .collect(Collectors.toList());
 
         // 4. Create info regarding the involved microservices addresses
         String productAddress = product.getServiceAddress();

@@ -24,17 +24,17 @@ public class ReviewServiceApplication {
 
 	@Autowired
 	public ReviewServiceApplication(
-			@Value("${spring.datasource.maximum-pool-size:10}")
-			Integer connectionPoolSize
+		@Value("${spring.datasource.maximum-pool-size:10}")
+		Integer connectionPoolSize
 	) {
 		this.connectionPoolSize = connectionPoolSize;
 	}
 
-	@Bean
-	public Scheduler jdbcScheduler() {
-		LOG.info("Creates a jdbcScheduler with connectionPoolSize = " + connectionPoolSize);
-		return Schedulers.fromExecutor(Executors.newFixedThreadPool(connectionPoolSize));
-	}
+    @Bean
+    public Scheduler jdbcScheduler() {
+        LOG.info("Creates a jdbcScheduler with connectionPoolSize = " + connectionPoolSize);
+        return Schedulers.fromExecutor(Executors.newFixedThreadPool(connectionPoolSize));
+    }
 
 	public static void main(String[] args) {
 		ConfigurableApplicationContext ctx = SpringApplication.run(ReviewServiceApplication.class, args);

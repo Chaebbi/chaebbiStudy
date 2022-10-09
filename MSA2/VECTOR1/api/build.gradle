@@ -33,5 +33,5 @@ dependencies {
 }
 
 dependencyManagement {
-    imports { mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}") }
+	imports { mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}") }
 }
