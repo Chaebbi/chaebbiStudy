@@ -59,9 +59,9 @@ public class RecommendationServiceApplicationTests {
 		assertEquals(3, (long)repository.findByProductId(productId).count().block());
 
 		getAndVerifyRecommendationsByProductId(productId, OK)
-				.jsonPath("$.length()").isEqualTo(3)
-				.jsonPath("$[2].productId").isEqualTo(productId)
-				.jsonPath("$[2].recommendationId").isEqualTo(3);
+			.jsonPath("$.length()").isEqualTo(3)
+			.jsonPath("$[2].productId").isEqualTo(productId)
+			.jsonPath("$[2].recommendationId").isEqualTo(3);
 	}
 
 	@Test
@@ -108,23 +108,23 @@ public class RecommendationServiceApplicationTests {
 	public void getRecommendationsMissingParameter() {
 
 		getAndVerifyRecommendationsByProductId("", BAD_REQUEST)
-				.jsonPath("$.path").isEqualTo("/recommendation")
-				.jsonPath("$.message").isEqualTo("Required int parameter 'productId' is not present");
+			.jsonPath("$.path").isEqualTo("/recommendation")
+			.jsonPath("$.message").isEqualTo("Required int parameter 'productId' is not present");
 	}
 
 	@Test
 	public void getRecommendationsInvalidParameter() {
 
 		getAndVerifyRecommendationsByProductId("?productId=no-integer", BAD_REQUEST)
-				.jsonPath("$.path").isEqualTo("/recommendation")
-				.jsonPath("$.message").isEqualTo("Type mismatch.");
+			.jsonPath("$.path").isEqualTo("/recommendation")
+			.jsonPath("$.message").isEqualTo("Type mismatch.");
 	}
 
 	@Test
 	public void getRecommendationsNotFound() {
 
 		getAndVerifyRecommendationsByProductId("?productId=113", OK)
-				.jsonPath("$.length()").isEqualTo(0);
+			.jsonPath("$.length()").isEqualTo(0);
 	}
 
 	@Test
@@ -133,8 +133,8 @@ public class RecommendationServiceApplicationTests {
 		int productIdInvalid = -1;
 
 		getAndVerifyRecommendationsByProductId("?productId=" + productIdInvalid, UNPROCESSABLE_ENTITY)
-				.jsonPath("$.path").isEqualTo("/recommendation")
-				.jsonPath("$.message").isEqualTo("Invalid productId: " + productIdInvalid);
+			.jsonPath("$.path").isEqualTo("/recommendation")
+			.jsonPath("$.message").isEqualTo("Invalid productId: " + productIdInvalid);
 	}
 
 	private WebTestClient.BodyContentSpec getAndVerifyRecommendationsByProductId(int productId, HttpStatus expectedStatus) {
@@ -143,12 +143,12 @@ public class RecommendationServiceApplicationTests {
 
 	private WebTestClient.BodyContentSpec getAndVerifyRecommendationsByProductId(String productIdQuery, HttpStatus expectedStatus) {
 		return client.get()
-				.uri("/recommendation" + productIdQuery)
-				.accept(APPLICATION_JSON)
-				.exchange()
-				.expectStatus().isEqualTo(expectedStatus)
-				.expectHeader().contentType(APPLICATION_JSON)
-				.expectBody();
+			.uri("/recommendation" + productIdQuery)
+			.accept(APPLICATION_JSON)
+			.exchange()
+			.expectStatus().isEqualTo(expectedStatus)
+			.expectHeader().contentType(APPLICATION_JSON)
+			.expectBody();
 	}
 
 	private void sendCreateRecommendationEvent(int productId, int recommendationId) {
