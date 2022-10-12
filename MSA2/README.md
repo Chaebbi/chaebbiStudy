@@ -23,6 +23,15 @@
 7장 : https://velog.io/@rosesua318/7%EC%9E%A5-%EB%A6%AC%EC%95%A1%ED%8B%B0%EB%B8%8C-%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4-%EA%B0%9C%EB%B0%9C <br>
 8장 : https://velog.io/@rosesua318/8%EC%9E%A5-%EC%8A%A4%ED%94%84%EB%A7%81-%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C-%EC%86%8C%EA%B0%9C <br>
 
+### 2022.10.12
+[민서] <br>
+9장 : https://velog.io/@rosesua318/9%EC%9E%A5-%EB%84%B7%ED%94%8C%EB%A6%AD%EC%8A%A4-%EC%9C%A0%EB%A0%88%EC%B9%B4%EC%99%80-%EB%A6%AC%EB%B3%B8%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%9C-%EC%84%9C%EB%B9%84%EC%8A%A4-%EA%B2%80%EC%83%89 <br>
+10장 : https://velog.io/@rosesua318/10%EC%9E%A5-%EC%8A%A4%ED%94%84%EB%A7%81-%ED%81%B4%EB%9D%BC%EC%9A%B0%EB%93%9C-%EA%B2%8C%EC%9D%B4%ED%8A%B8%EC%9B%A8%EC%9D%B4%EB%A5%BC-%EC%97%90%EC%A7%80-%EC%84%9C%EB%B2%84%EB%A1%9C-%EC%82%AC%EC%9A%A9 <br>
+
+### 2022.10.13
+[민서] <br>
+11장 : https://velog.io/@rosesua318/11%EC%9E%A5-API-%EC%A0%91%EA%B7%BC-%EB%B3%B4%EC%95%88 <br>
+
 ---
 [세현] <br> 
 스터디-MSA (스프링으로 하는 마이크로서비스 구축) 시리즈 포스트 <br> 
