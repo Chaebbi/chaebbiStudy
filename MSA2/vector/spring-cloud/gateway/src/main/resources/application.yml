@@ -1,13 +1,35 @@
-server.port: 8080
+server.port: 8443
 
 spring.application.name: gateway
 
-app.eureka-server: localhost
+server.ssl:
+  key-store-type: PKCS12
+  key-store: classpath:keystore/edge.p12
+  key-store-password: password
+  key-alias: localhost
+
+app:
+  eureka-username: u
+  eureka-password: p
+  eureka-server: localhost
+  auth-server: localhost
+
+gateway:
+  environment:
+    SPRING_PROFILES_ACTIVE=docker
+    SERVER_SSL_KEY_STORE=file:/keystore/edge-test.p12
+    SERVER_SSL_KEY_STORE_PASSWORD=testtest
+volumes:
+  $PWD/keystore: /keystore
+build: spring-cloud/gateway
+mem_limit: 350m
+ports:
+  "8443:8443"
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://${app.eureka-server}:8761/eureka/
+      defaultZone: "http://${app.eureka-username}:${app.eureka-password}@${app.eureka-server}:8761/eureka/"
     initialInstanceInfoReplicationIntervalSeconds: 5
     registryFetchIntervalSeconds: 5
   instance:
@@ -20,52 +42,61 @@ ribbon.NFLoadBalancerPingInterval: 5
 
 spring.cloud.gateway.routes:
 
-- id: product-composite
-  uri: lb://product-composite
-  predicates:
-  - Path=/product-composite/**
+  - id: product-composite
+    uri: lb://product-composite
+    predicates:
+      - Path=/product-composite/**
+    #        filters:
+    #        - TokenRelay=
 
-- id: eureka-api
-  uri: http://${app.eureka-server}:8761
-  predicates:
-  - Path=/eureka/api/{segment}
-  filters:
-  - SetPath=/eureka/{segment}
+  - id: oauth-server
+    uri: lb://auth-server
+    predicates:
+      - Path=/oauth/**
 
-- id: eureka-web-start
-  uri: http://${app.eureka-server}:8761
-  predicates:
-  - Path=/eureka/web
-  filters:
-  - SetPath=/
+  - id: eureka-api
+    uri: http://${app.eureka-server}:8761
+    predicates:
+      - Path=/eureka/api/{segment}
+    filters:
+      - SetPath=/eureka/{segment}
 
-- id: eureka-web-other
-  uri: http://${app.eureka-server}:8761
-  predicates:
-  - Path=/eureka/**
+  - id: eureka-web-start
+    uri: http://${app.eureka-server}:8761
+    predicates:
+      - Path=/eureka/web
+    filters:
+      - SetPath=/
 
-- id: host_route_200
-  uri: http://httpstat.us
-  predicates:
-  - Host=i.feel.lucky:8080
-  - Path=/headerrouting/**
-  filters:
-  - SetPath=/200
+  - id: eureka-web-other
+    uri: http://${app.eureka-server}:8761
+    predicates:
+      - Path=/eureka/**
 
-- id: host_route_418
-  uri: http://httpstat.us
-  predicates:
-  - Host=im.a.teapot:8080
-  - Path=/headerrouting/**
-  filters:
-  - SetPath=/418
+  - id: host_route_200
+    uri: http://httpstat.us
+    predicates:
+      - Host=i.feel.lucky:8080
+      - Path=/headerrouting/**
+    filters:
+      - SetPath=/200
 
-- id: host_route_501
-  uri: http://httpstat.us
-  predicates:
-  - Path=/headerrouting/**
-  filters:
-  - SetPath=/501
+  - id: host_route_418
+    uri: http://httpstat.us
+    predicates:
+      - Host=im.a.teapot:8080
+      - Path=/headerrouting/**
+    filters:
+      - SetPath=/418
+
+  - id: host_route_501
+    uri: http://httpstat.us
+    predicates:
+      - Path=/headerrouting/**
+    filters:
+      - SetPath=/501
+
+spring.security.oauth2.resourceserver.jwt.jwk-set-uri: http://${app.auth-server}:9999/.well-known/jwks.json
 
 management.endpoint.health.show-details: "ALWAYS"
 management.endpoints.web.exposure.include: "*"
@@ -75,8 +106,11 @@ logging:
     root: INFO
     org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: INFO
     org.springframework.cloud.gateway: TRACE
+    org.springframework.web.server.adapter.HttpWebHandlerAdapter: TRACE
 
 ---
 spring.profiles: docker
 
-app.eureka-server: eureka
+app:
+  eureka-server: eureka
+  auth-server: auth-server
