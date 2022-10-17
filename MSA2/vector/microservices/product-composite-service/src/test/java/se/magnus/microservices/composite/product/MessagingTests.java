@@ -36,13 +36,13 @@ import static se.magnus.microservices.composite.product.IsSameEvent.sameEventExc
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(
-		webEnvironment=RANDOM_PORT,
-		classes = {ProductCompositeServiceApplication.class, TestSecurityConfig.class },
-		properties = {"spring.main.allow-bean-definition-overriding=true","eureka.client.enabled=false"})
+	webEnvironment=RANDOM_PORT,
+	classes = {ProductCompositeServiceApplication.class, TestSecurityConfig.class },
+	properties = {"spring.main.allow-bean-definition-overriding=true","eureka.client.enabled=false"})
 public class MessagingTests {
 
-	@Autowired
-	private WebTestClient client;
+    @Autowired
+    private WebTestClient client;
 
 	@Autowired
 	private ProductCompositeIntegration.MessageSources channels;
@@ -82,8 +82,8 @@ public class MessagingTests {
 	public void createCompositeProduct2() {
 
 		ProductAggregate composite = new ProductAggregate(1, "name", 1,
-				singletonList(new RecommendationSummary(1, "a", 1, "c")),
-				singletonList(new ReviewSummary(1, "a", "s", "c")), null);
+			singletonList(new RecommendationSummary(1, "a", 1, "c")),
+			singletonList(new ReviewSummary(1, "a", "s", "c")), null);
 
 		postAndVerifyProduct(composite, OK);
 
@@ -137,16 +137,16 @@ public class MessagingTests {
 
 	private void postAndVerifyProduct(ProductAggregate compositeProduct, HttpStatus expectedStatus) {
 		client.post()
-				.uri("/product-composite")
-				.body(just(compositeProduct), ProductAggregate.class)
-				.exchange()
-				.expectStatus().isEqualTo(expectedStatus);
+			.uri("/product-composite")
+			.body(just(compositeProduct), ProductAggregate.class)
+			.exchange()
+			.expectStatus().isEqualTo(expectedStatus);
 	}
 
 	private void deleteAndVerifyProduct(int productId, HttpStatus expectedStatus) {
 		client.delete()
-				.uri("/product-composite/" + productId)
-				.exchange()
-				.expectStatus().isEqualTo(expectedStatus);
+			.uri("/product-composite/" + productId)
+			.exchange()
+			.expectStatus().isEqualTo(expectedStatus);
 	}
 }
