@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Josh Cummings
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(properties = {"eureka.client.enabled=false"})
+@SpringBootTest(properties = {"eureka.client.enabled=false","spring.cloud.config.enabled=false"})
 @AutoConfigureMockMvc
 public class OAuth2AuthorizationServerApplicationTests {
 
@@ -46,10 +46,10 @@ public class OAuth2AuthorizationServerApplicationTests {
 			throws Exception {
 
 		this.mvc.perform(post("/oauth/token")
-			.param("grant_type", "password")
-			.param("username", "magnus")
-			.param("password", "password")
-			.header("Authorization", "Basic cmVhZGVyOnNlY3JldA=="))
+						.param("grant_type", "password")
+						.param("username", "magnus")
+						.param("password", "password")
+						.header("Authorization", "Basic cmVhZGVyOnNlY3JldA=="))
 				.andExpect(status().isOk());
 	}
 
