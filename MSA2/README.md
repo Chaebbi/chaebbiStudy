@@ -37,6 +37,10 @@
 12장 : https://velog.io/@rosesua318/12%EC%9E%A5-%EA%B5%AC%EC%84%B1-%EC%A4%91%EC%95%99%ED%99%94 <br>
 13장 : https://velog.io/@rosesua318/Resilience4j%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%9C-%ED%83%84%EB%A0%A5%EC%84%B1-%EA%B0%9C%EC%84%A0 <br>
 
+### 2022.10.20
+[민서] <br>
+14장 : https://velog.io/@rosesua318/14%EC%9E%A5-%EB%B6%84%EC%82%B0-%EC%B6%94%EC%A0%81 <br>
+
 ---
 [세현] <br> 
 스터디-MSA (스프링으로 하는 마이크로서비스 구축) 시리즈 포스트 <br> 
