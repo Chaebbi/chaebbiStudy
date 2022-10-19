@@ -32,6 +32,10 @@
 [민서] <br>
 11장 : https://velog.io/@rosesua318/11%EC%9E%A5-API-%EC%A0%91%EA%B7%BC-%EB%B3%B4%EC%95%88 <br>
 
+### 2022.10.19
+[민서] <br>
+12장 :https://velog.io/@rosesua318/12%EC%9E%A5-%EA%B5%AC%EC%84%B1-%EC%A4%91%EC%95%99%ED%99%94 <br>
+
 ---
 [세현] <br> 
 스터디-MSA (스프링으로 하는 마이크로서비스 구축) 시리즈 포스트 <br> 
