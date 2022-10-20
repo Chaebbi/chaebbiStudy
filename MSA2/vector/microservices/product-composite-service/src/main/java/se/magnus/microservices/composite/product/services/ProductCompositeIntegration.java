@@ -65,9 +65,9 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
 
     @Autowired
     public ProductCompositeIntegration(
-        WebClient.Builder webClientBuilder,
-        ObjectMapper mapper,
-        MessageSources messageSources
+            WebClient.Builder webClientBuilder,
+            ObjectMapper mapper,
+            MessageSources messageSources
     ) {
         this.webClientBuilder = webClientBuilder;
         this.mapper = mapper;
@@ -156,16 +156,16 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
 
         switch (wcre.getStatusCode()) {
 
-        case NOT_FOUND:
-            return new NotFoundException(getErrorMessage(wcre));
+            case NOT_FOUND:
+                return new NotFoundException(getErrorMessage(wcre));
 
-        case UNPROCESSABLE_ENTITY :
-            return new InvalidInputException(getErrorMessage(wcre));
+            case UNPROCESSABLE_ENTITY :
+                return new InvalidInputException(getErrorMessage(wcre));
 
-        default:
-            LOG.warn("Got a unexpected HTTP error: {}, will rethrow it", wcre.getStatusCode());
-            LOG.warn("Error body: {}", wcre.getResponseBodyAsString());
-            return ex;
+            default:
+                LOG.warn("Got a unexpected HTTP error: {}, will rethrow it", wcre.getStatusCode());
+                LOG.warn("Error body: {}", wcre.getResponseBodyAsString());
+                return ex;
         }
     }
 
