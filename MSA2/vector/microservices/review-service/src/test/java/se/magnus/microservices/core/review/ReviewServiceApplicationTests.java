@@ -28,9 +28,11 @@ import static se.magnus.api.event.Event.Type.DELETE;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment=RANDOM_PORT, properties = {
-	"logging.level.se.magnus=DEBUG",
-	"eureka.client.enabled=false",
-    "spring.datasource.url=jdbc:h2:mem:review-db"})
+		"logging.level.se.magnus=DEBUG",
+		"eureka.client.enabled=false",
+		"spring.cloud.config.enabled=false",
+		"spring.datasource.url=jdbc:h2:mem:review-db",
+		"server.error.include-message=always"})
 public class ReviewServiceApplicationTests {
 
 	@Autowired
@@ -64,9 +66,9 @@ public class ReviewServiceApplicationTests {
 		assertEquals(3, repository.findByProductId(productId).size());
 
 		getAndVerifyReviewsByProductId(productId, OK)
-			.jsonPath("$.length()").isEqualTo(3)
-			.jsonPath("$[2].productId").isEqualTo(productId)
-			.jsonPath("$[2].reviewId").isEqualTo(3);
+				.jsonPath("$.length()").isEqualTo(3)
+				.jsonPath("$[2].productId").isEqualTo(productId)
+				.jsonPath("$[2].reviewId").isEqualTo(3);
 	}
 
 	@Test
@@ -115,23 +117,23 @@ public class ReviewServiceApplicationTests {
 	public void getReviewsMissingParameter() {
 
 		getAndVerifyReviewsByProductId("", BAD_REQUEST)
-			.jsonPath("$.path").isEqualTo("/review")
-			.jsonPath("$.message").isEqualTo("Required int parameter 'productId' is not present");
+				.jsonPath("$.path").isEqualTo("/review")
+				.jsonPath("$.message").isEqualTo("Required int parameter 'productId' is not present");
 	}
 
 	@Test
 	public void getReviewsInvalidParameter() {
 
 		getAndVerifyReviewsByProductId("?productId=no-integer", BAD_REQUEST)
-			.jsonPath("$.path").isEqualTo("/review")
-			.jsonPath("$.message").isEqualTo("Type mismatch.");
+				.jsonPath("$.path").isEqualTo("/review")
+				.jsonPath("$.message").isEqualTo("Type mismatch.");
 	}
 
 	@Test
 	public void getReviewsNotFound() {
 
 		getAndVerifyReviewsByProductId("?productId=213", OK)
-			.jsonPath("$.length()").isEqualTo(0);
+				.jsonPath("$.length()").isEqualTo(0);
 	}
 
 	@Test
@@ -140,8 +142,8 @@ public class ReviewServiceApplicationTests {
 		int productIdInvalid = -1;
 
 		getAndVerifyReviewsByProductId("?productId=" + productIdInvalid, UNPROCESSABLE_ENTITY)
-			.jsonPath("$.path").isEqualTo("/review")
-			.jsonPath("$.message").isEqualTo("Invalid productId: " + productIdInvalid);
+				.jsonPath("$.path").isEqualTo("/review")
+				.jsonPath("$.message").isEqualTo("Invalid productId: " + productIdInvalid);
 	}
 
 	private WebTestClient.BodyContentSpec getAndVerifyReviewsByProductId(int productId, HttpStatus expectedStatus) {
@@ -150,12 +152,12 @@ public class ReviewServiceApplicationTests {
 
 	private WebTestClient.BodyContentSpec getAndVerifyReviewsByProductId(String productIdQuery, HttpStatus expectedStatus) {
 		return client.get()
-			.uri("/review" + productIdQuery)
-			.accept(APPLICATION_JSON)
-			.exchange()
-			.expectStatus().isEqualTo(expectedStatus)
-			.expectHeader().contentType(APPLICATION_JSON)
-			.expectBody();
+				.uri("/review" + productIdQuery)
+				.accept(APPLICATION_JSON)
+				.exchange()
+				.expectStatus().isEqualTo(expectedStatus)
+				.expectHeader().contentType(APPLICATION_JSON)
+				.expectBody();
 	}
 
 	private void sendCreateReviewEvent(int productId, int reviewId) {
