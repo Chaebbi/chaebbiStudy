@@ -18,7 +18,6 @@ public interface ProductCompositeService {
      *   '{"productId":123,"name":"product 123","weight":123}'
      *
      * @param body
-     * @return
      */
     @ApiOperation(
             value = "${api.product-composite.create-composite-product.description}",
@@ -49,8 +48,11 @@ public interface ProductCompositeService {
     @GetMapping(
             value    = "/product-composite/{productId}",
             produces = "application/json")
-    Mono<ProductAggregate> getCompositeProduct(@PathVariable int productId);
-
+    Mono<ProductAggregate> getCompositeProduct(
+            @PathVariable int productId,
+            @RequestParam(value = "delay", required = false, defaultValue = "0") int delay,
+            @RequestParam(value = "faultPercent", required = false, defaultValue = "0") int faultPercent
+    );
 
     /**
      * Sample usage:
@@ -58,7 +60,6 @@ public interface ProductCompositeService {
      * curl -X DELETE $HOST:$PORT/product-composite/1
      *
      * @param productId
-     * @return
      */
     @ApiOperation(
             value = "${api.product-composite.delete-composite-product.description}",
